@@ -39,10 +39,15 @@ function App() {
 			case "C":
 				handleClear();
 				break;
+			case "⌫":
+				handleBackspace();
+				break;
 			case number:
 				handleNumber(number);
+				break;
 			case operator:
 				handleOperator(operator);
+				break;
 			default:
 				break;
 		}
@@ -53,8 +58,18 @@ function App() {
 		setOutput("");
 	}
 
+	function handleBackspace() {
+		if (input.length > 1) {
+			setInput(`${input.slice(0, -1)}`);
+		} else {
+			if (input !== "0") {
+				setInput("0");
+			}
+		}
+	}
+
 	function handleNumber(number) {
-		if (number) {
+		if (!isNaN(number)) {
 			if (input === "0") {
 				setInput(`${number}`);
 			} else {
@@ -64,24 +79,26 @@ function App() {
 	}
 
 	function handleOperator(operator) {
+		const operators = "+-x÷";
+
 		if (operator) {
 			if (input === "0" && operator === "-") {
 				setInput(`${operator}`);
-			} else if (input === "-" && operator !== "-") {
+			} else if ((input === "-" || input === "0") && operator !== "-") {
 				setInput("0");
 			} else if (
 				(input.endsWith("x") || input.endsWith("÷")) &&
 				operator === "-"
 			) {
 				setInput(`${input}${operator}`);
-			} else if (!"+-x÷".includes(input.at(-1))) {
+			} else if (!operators.includes(input.at(-1))) {
 				setInput(`${input}${operator}`);
 			} else {
-				if ("x÷".includes(input.at(-2))) {
-					setInput(`${input.slice(0, -2)}${operator}`);
-				} else {
-					setInput(`${input.slice(0, -1)}${operator}`);
-				}
+				const penultimateChar = input.at(-2);
+				const newInput = operators.includes(penultimateChar)
+					? `${input.slice(0, -2)}${operator}`
+					: `${input.slice(0, -1)}${operator}`;
+				setInput(newInput);
 			}
 		}
 	}
