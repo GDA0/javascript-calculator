@@ -1,5 +1,6 @@
+import { useState } from "react";
 import Display from "./components/ScreenDisplay";
-import Keys from "./components/KeysDisplay";
+import KeysDisplay from "./components/KeysDisplay";
 
 const keysData = [
 	{ id: "clear", value: "C" },
@@ -24,10 +25,27 @@ const keysData = [
 ];
 
 const operators = ["C", "÷", "x", "⌫", "-", "+", "="];
-
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function App() {
+	const [input, setInput] = useState("0");
+	const [output, setOutput] = useState("");
+
+	function handleInput(input) {
+		switch (input) {
+			case "C":
+				handleClear();
+				break;
+			default:
+				break;
+		}
+	}
+
+	function handleClear() {
+		setInput("0");
+		setOutput("");
+	}
+
 	return (
 		<div className="bg-light d-flex flex-column min-vh-100">
 			<header>
@@ -44,8 +62,11 @@ function App() {
 					className="container d-flex flex-column align-items-center justify-content-center bg-white mt-5 p-3 rounded shadow-sm gap-1"
 					style={{ maxWidth: "300px" }}
 				>
-					<Display />
-					<Keys keysData={keysData} />
+					<Display input={input} output={output} />
+					<KeysDisplay
+						keysData={keysData}
+						handleInput={handleInput}
+					/>
 				</div>
 			</main>
 			<footer className="container text-center fw-medium text-secondary mt-auto">
