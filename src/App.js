@@ -13,8 +13,7 @@ function App() {
 			<main className="flex-grow-1"></main>
 			<footer className="container text-center fw-medium text-secondary mt-auto">
 				<p>
-					&copy; {new Date().getFullYear()} Calculator.
-					Created By{" "}
+					&copy; {new Date().getFullYear()} Calculator. Created By{" "}
 					<a
 						className="text-primary"
 						href="https://github.com/GDA0"
