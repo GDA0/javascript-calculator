@@ -1,0 +1,22 @@
+.keys-display {
+	display: grid;
+	grid-template-columns: repeat(4, calc(250px / 4));
+	gap: 5px;
+}
+
+.keys-display > #equals {
+	grid-row: span 2;
+}
+
+.keys-display > button {
+	transition: background-color 0.3s, transform 0.3s;
+	will-change: contents;
+}
+
+.keys-display > button:hover {
+	background-color: #f8f9fa;
+}
+
+.keys-display > button:active {
+	transform: scale(0.9);
+}

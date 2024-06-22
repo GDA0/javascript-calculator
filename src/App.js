@@ -40,7 +40,10 @@ function App() {
 				</nav>
 			</header>
 			<main className="flex-grow-1">
-				<div className="container">
+				<div
+					className="container d-flex flex-column align-items-center justify-content-center bg-white mt-5 p-3 rounded shadow-sm gap-1"
+					style={{ maxWidth: "300px" }}
+				>
 					<Display />
 					<Keys keysData={keysData} />
 				</div>
