@@ -24,7 +24,7 @@ const keysData = [
 	{ id: "decimal", value: "." },
 ];
 
-const operators = ["C", "÷", "x", "⌫", "-", "+", "="];
+const operators = ["÷", "x", "-"];
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function App() {
@@ -32,10 +32,14 @@ function App() {
 	const [output, setOutput] = useState("");
 
 	function handleInput(input) {
+		const number = numbers.find((num) => num === input);
+
 		switch (input) {
 			case "C":
 				handleClear();
 				break;
+			case number:
+				handleNumber(input);
 			default:
 				break;
 		}
@@ -44,6 +48,14 @@ function App() {
 	function handleClear() {
 		setInput("0");
 		setOutput("");
+	}
+
+	function handleNumber(number) {
+		if (input === "0") {
+			setInput(`${number}`);
+		} else {
+			setInput(`${input}${number}`);
+		}
 	}
 
 	return (

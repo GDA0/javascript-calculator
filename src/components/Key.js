@@ -1,7 +1,7 @@
-const operators = ["C", "÷", "x", "⌫", "-", "+", "="];
+const specialKeys = ["C", "÷", "x", "⌫", "-", "+", "="];
 
 export default function Key({ keyData: { id, value }, handleInput }) {
-	const isOperator = operators.includes(value);
+	const isOperator = specialKeys.includes(value);
 
 	return (
 		<button
