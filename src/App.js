@@ -24,7 +24,7 @@ const keysData = [
 	{ id: "decimal", value: "." },
 ];
 
-const operators = ["÷", "x", "-"];
+const operators = ["÷", "x", "-", "+"];
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function App() {
@@ -33,13 +33,16 @@ function App() {
 
 	function handleInput(input) {
 		const number = numbers.find((num) => num === input);
+		const operator = operators.find((opt) => opt === input);
 
 		switch (input) {
 			case "C":
 				handleClear();
 				break;
 			case number:
-				handleNumber(input);
+				handleNumber(number);
+			case operator:
+				handleOperator(operator);
 			default:
 				break;
 		}
@@ -51,10 +54,35 @@ function App() {
 	}
 
 	function handleNumber(number) {
-		if (input === "0") {
-			setInput(`${number}`);
-		} else {
-			setInput(`${input}${number}`);
+		if (number) {
+			if (input === "0") {
+				setInput(`${number}`);
+			} else {
+				setInput(`${input}${number}`);
+			}
+		}
+	}
+
+	function handleOperator(operator) {
+		if (operator) {
+			if (input === "0" && operator === "-") {
+				setInput(`${operator}`);
+			} else if (input === "-" && operator !== "-") {
+				setInput("0");
+			} else if (
+				(input.endsWith("x") || input.endsWith("÷")) &&
+				operator === "-"
+			) {
+				setInput(`${input}${operator}`);
+			} else if (!"+-x÷".includes(input.at(-1))) {
+				setInput(`${input}${operator}`);
+			} else {
+				if ("x÷".includes(input.at(-2))) {
+					setInput(`${input.slice(0, -2)}${operator}`);
+				} else {
+					setInput(`${input.slice(0, -1)}${operator}`);
+				}
+			}
 		}
 	}
 
