@@ -29,17 +29,17 @@ const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function add(a, b) {
 	let result = a + b;
-	return parseFloat(result.toFixed(2));
+	return parseFloat(result.toFixed(5));
 }
 
 function subtract(a, b) {
 	let result = a - b;
-	return parseFloat(result.toFixed(2));
+	return parseFloat(result.toFixed(5));
 }
 
 function multiply(a, b) {
 	let result = a * b;
-	return parseFloat(result.toFixed(2));
+	return parseFloat(result.toFixed(5));
 }
 
 function divide(a, b) {
@@ -207,7 +207,7 @@ function App() {
 				let operator = operators ? operators[0] : null;
 
 				if (isNaN(firstNumber) || isNaN(secondNumber)) {
-					setDisplay(`${display}`);
+					setDisplay("Syntax ERROR");
 				} else {
 					operator =
 						operator === "x"
