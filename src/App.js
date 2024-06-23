@@ -42,6 +42,8 @@ function App() {
 			case "⌫":
 				handleBackspace();
 				break;
+			case ".":
+				handleDecimal();
 			case number:
 				handleNumber(number);
 				break;
@@ -68,6 +70,20 @@ function App() {
 		}
 	}
 
+	function handleDecimal() {
+		if (input === "0") {
+			setInput("0.");
+		} else if (operators.includes(input.at(-1))) {
+			setInput(`${input}0.`);
+		} else {
+			const numbers = input.split(/[+\-x÷]/);
+			const lastNumber = numbers.at(-1);
+			if (!lastNumber.includes(".")) {
+				setInput(`${input}.`);
+			}
+		}
+	}
+
 	function handleNumber(number) {
 		if (!isNaN(number)) {
 			if (input === "0") {
@@ -79,8 +95,6 @@ function App() {
 	}
 
 	function handleOperator(operator) {
-		const operators = "+-x÷";
-
 		if (operator) {
 			if (input === "0" && operator === "-") {
 				setInput(`${operator}`);
