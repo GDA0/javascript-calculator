@@ -28,27 +28,19 @@ const operators = ["÷", "x", "-", "+"];
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function add(a, b) {
-	let result = a + b;
-	return parseFloat(result.toFixed(5));
+	return parseFloat((a + b).toFixed(5));
 }
 
 function subtract(a, b) {
-	let result = a - b;
-	return parseFloat(result.toFixed(5));
+	return parseFloat((a - b).toFixed(5));
 }
 
 function multiply(a, b) {
-	let result = a * b;
-	return parseFloat(result.toFixed(5));
+	return parseFloat((a * b).toFixed(5));
 }
 
 function divide(a, b) {
-	if (b === 0) {
-		return "Math ERROR";
-	}
-
-	let result = a / b;
-	return parseFloat(result.toFixed(5));
+	return b === 0 ? "Math ERROR" : parseFloat((a / b).toFixed(5));
 }
 
 function operate(operator, firstNumber, secondNumber) {
@@ -68,41 +60,37 @@ function operate(operator, firstNumber, secondNumber) {
 
 function isValidExpression(input) {
 	const pattern = /(-?\d+(\.\d+)?)[+\-x÷]+(-?\d+(\.\d+)?)/;
-
 	return pattern.test(input);
 }
 
 function App() {
 	const [display, setDisplay] = useState("0");
 
-	function handleInput(display) {
-		const number = numbers.find((num) => num === display);
-		const operator = operators.find((opt) => opt === display);
-
-		switch (display) {
-			case "C":
-				handleClear();
-				break;
-			case "⌫":
-				handleBackspace();
-				break;
-			case ".":
-				handleDecimal();
-				break;
-			case "%":
-				handlePercent();
-				break;
-			case "=":
-				handleEquals();
-				break;
-			case number:
-				handleNumber(number);
-				break;
-			case operator:
-				handleOperator(operator);
-				break;
-			default:
-				break;
+	function handleInput(input) {
+		if (numbers.includes(input)) {
+			handleNumber(input);
+		} else if (operators.includes(input)) {
+			handleOperator(input);
+		} else {
+			switch (input) {
+				case "C":
+					handleClear();
+					break;
+				case "⌫":
+					handleBackspace();
+					break;
+				case ".":
+					handleDecimal();
+					break;
+				case "%":
+					handlePercent();
+					break;
+				case "=":
+					handleEquals();
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
@@ -111,13 +99,7 @@ function App() {
 	}
 
 	function handleBackspace() {
-		if (display.length > 1) {
-			setDisplay(`${display.slice(0, -1)}`);
-		} else {
-			if (display !== "0") {
-				setDisplay("0");
-			}
-		}
+		setDisplay(display.length > 1 ? display.slice(0, -1) : "0");
 	}
 
 	function handleDecimal() {
@@ -207,7 +189,7 @@ function App() {
 				let operator = operators ? operators[0] : null;
 
 				if (isNaN(firstNumber) || isNaN(secondNumber)) {
-					setDisplay("Syntax ERROR");
+					setDisplay(`${display}`);
 				} else {
 					operator =
 						operator === "x"
@@ -225,13 +207,7 @@ function App() {
 	}
 
 	function handleNumber(number) {
-		if (!isNaN(number)) {
-			if (display === "0") {
-				setDisplay(`${number}`);
-			} else {
-				setDisplay(`${display}${number}`);
-			}
-		}
+		setDisplay(display === "0" ? number.toString() : display + number);
 	}
 
 	function handleOperator(operator) {
