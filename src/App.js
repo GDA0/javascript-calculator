@@ -44,6 +44,10 @@ function App() {
 				break;
 			case ".":
 				handleDecimal();
+				break;
+			case "%":
+				handlePercent();
+				break;
 			case number:
 				handleNumber(number);
 				break;
@@ -81,6 +85,24 @@ function App() {
 			if (!lastNumber.includes(".")) {
 				setInput(`${input}.`);
 			}
+		}
+	}
+
+	function handlePercent() {
+		if (!(input === "0" || operators.includes(input.at(-1)))) {
+			const numberRegex = /-?\d+(\.\d+)?/g;
+			const numbers = input.match(numberRegex);
+			const lastNumber = numbers.at(-1);
+
+			const parsedLastNumber = parseFloat(lastNumber);
+			const percentage = parsedLastNumber / 100;
+
+			const modifiedExpression = input.replace(
+				new RegExp(`${lastNumber}$`),
+				percentage.toString()
+			);
+
+			setInput(modifiedExpression);
 		}
 	}
 
